@@ -4,3 +4,4 @@ if [ ! -d ~/.local/share/nvim/swap ]; then
     mkdir ~/.local/share/nvim/swap 
 fi
 sudo chown -R $(whoami) ~/.local/share/nvim/swap
+go install golang.org/x/tools/gopls@latest
