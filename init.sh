@@ -5,3 +5,5 @@ if [ ! -d ~/.local/share/nvim/swap ]; then
 fi
 sudo chown -R $(whoami) ~/.local/share/nvim/swap
 go install golang.org/x/tools/gopls@latest
+
+nvim --headless -c 'PackerInstall' -c 'PackerSync'
