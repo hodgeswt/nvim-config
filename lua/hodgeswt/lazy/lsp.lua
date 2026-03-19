@@ -31,12 +31,27 @@ return {
                 "gopls",
                 "fsautocomplete",
                 "omnisharp",
+                "pyright",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
                     require("lspconfig")[server_name].setup {
                         capabilities = capabilities
                     }
+                end,
+                ["pyright"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.pyright.setup({
+                        settings = {
+                            python = {
+                                analysis = {
+                                    autoSearchPaths = true,
+                                    useLibraryCodeForTypes = true,
+                                    diagnosticMode = 'openFilesOnly',
+                                },
+                            },
+                        },
+                    })
                 end,
                 ["omnisharp"] = function()
                     local lspconfig = require("lspconfig")
@@ -92,6 +107,13 @@ return {
             }
         })
 
+        vim.lsp.config("ruff", {
+            capabilities = capabilities,
+            cmd = { vim.fn.exepath("ruff"), "server" },
+            filetypes = { "python" },
+        })
+        vim.lsp.enable("ruff")
+
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
         cmp.setup({
@@ -125,5 +147,5 @@ return {
                 prefix = "",
             },
         })
-    end
+    end,
 }
